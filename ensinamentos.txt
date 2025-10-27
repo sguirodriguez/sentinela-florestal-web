@@ -1,0 +1,148 @@
+JAVASCRIPT | APLICAÇÃO WEB
+
+doc: https://www.w3schools.com/js/js_number_methods.asp
+
+-------Operadores-------
++ -> soma
+- -> subtração
+* -> multiplicação
+/ -> divisão
+
+= -> atribuição de valor
+== -> comparação de valor
+!= -> diferente 
+|| -> OU, algebra boolean, pode ser 1 ou 2
+&  -> valor tem quer ser maior que 10 e menor que 15
+> -> valor maior que
+< -> valor menor que
+>= -> valor maior ou igual que
+<= -> valor menor ou igual que
+! -> validação se nao existe 
+
+------Variaveis----
+const -> constante (um valor que não muda)
+var   -> variável global, consegue acessar fora do escopo
+let   -> variável que voce consegueu acessar apenas no escopo e voce consegue alterar
+
+
+const VALOR_DA_CARNE = 25,00
+
+
+VALOR_DA_CARNE = 30
+
+console.log('valor--->', VALOR_DA_CARNE, `teste ${VALOR_DA_CARNE}`, 'teste ' + VALOR_DA_CARNE) // valor 25
+
+var valorDoBacon = 10
+
+valorDoBacon = 5
+
+console.log('bacon', valorDoBacon) //5
+
+let valorDoPresunto = 7
+
+valorDoBacon = 3
+
+console.log(valorDoBacon) // 3
+
+----Funcao----
+
+function Soma(){
+    return 1 + 1
+}
+
+const Soma = () => {
+    return 1 + 1
+}
+
+() => {
+    return 1 + 1
+}
+
+-----Array------
+
+['Samuel', 'Jose'] -> string
+[10, 20, 30] -> numero
+['Jose', 30]    -> numero e string
+[{ name: 'Samuel', idade: 20}, { name: 'Jose', idade: 20}] -> objetos
+
+parseFloat, math.round()
+
+const pessoas = ['Jose', 'Samuel']
+
+console.log(pessoas)
+
+------ condicionais -----
+
+const idade = 17;
+const nome = '';
+
+if(idade < 18){
+    return console.log('NAO PODE CONTINUAR, MENOR DE IDADE')
+}
+
+if(idade >= 18){
+    return console.log('DEU BOM')
+}
+
+if(!nome){
+    return console.log('PRECISA PREENCHER O NOME')
+} else{
+    return console.log('pode continuar')
+}
+
+
+------ loops/metodos -----
+
+for
+while
+
+const nomes = ['Samuel', 'Thais', 'Jose']
+let contador = 0
+.map
+
+nomes.map((item)=>{
+    console.log('item', item) // Samuel
+})
+
+
+for(contador = 0; contador < nomes.length; contador++){
+    console.log(nomes[contador])
+}
+
+
+const novoArray = nomes.filter((item)=>{
+    if(item == 'Samuel'){
+        return console.log('NAO PODE ENTRAR NA APLIACAO')
+    }
+
+    return item
+})
+
+
+
+///WEB
+
+HTML -> linguagem de marcação
+<input/> --> caixas de texto, posso inserir nome ou data
+<button/> ---> pressionar o botao, ao pressionar faz algo (cadastro, login)
+<p></p>   --> escrever algo na tela (margens, tamanho diferente)
+<h2></h2> --> titulo  h1,h2,h3,h4
+<span></span> --> escreve algo na tela
+<div></div> ---> Pensar como uma caixa na tela, estiliza, defini tamanho
+ 
+
+ CSS -> ESTILIZA nosso HTML
+ width -> largura
+ height -> altura
+ padding -> espacamento, retrai a propria caixa
+ margin -> espacamento, empurra as outras caixas
+ background-color -> cor da caixa
+ color -> cor de texto
+ display -> flex, column
+
+
+ Javascript-> Lida com os eventos do site
+
+
+
+
