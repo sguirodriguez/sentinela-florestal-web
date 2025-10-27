@@ -1,0 +1,73 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.header {
+    background-color: $bg-white;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+
+    .header-container {
+        @include container;
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            height: 4rem;
+
+            @include tablet {
+                height: 3.5rem;
+            }
+
+            .header-logo {
+                display: flex;
+                align-items: center;
+                min-width: 0;
+                flex: 1;
+
+                h1 {
+                    font-size: 1rem;
+                    font-weight: bold;
+                    color: $text-primary;
+                    margin: 0;
+
+                    @include mobile {
+                        font-size: 1.125rem;
+                    }
+                }
+            }
+
+            .header-actions {
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+
+                @include mobile {
+                    gap: 1rem;
+                }
+
+                .header-user-info {
+                    display: none;
+
+                    @include mobile {
+                        display: flex;
+                        align-items: center;
+                        gap: 0.5rem;
+                        font-size: 0.75rem;
+                        color: $text-secondary;
+
+                        @include tablet {
+                            font-size: 0.875rem;
+                            gap: 1rem;
+                        }
+                    }
+                }
+
+                .header-buttons {
+                    display: flex;
+                    align-items: center;
+                    gap: 0.5rem;
+                }
+            }
+        }
+    }
+}

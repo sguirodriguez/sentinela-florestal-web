@@ -1,0 +1,52 @@
+// Usando @use para importar variables e mixins
+@use './variables' as *;
+@use './mixins' as *;
+
+// Usando @use para importar os componentes
+@use './components/button';
+@use './components/input';
+@use './components/header';
+@use './components/login';
+@use './components/dashboard';
+@use './components/loading';
+
+// Reset global
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', ui-sans-serif, system-ui, sans-serif;
+    font-weight: 400;
+    background-color: $bg-white;
+    width: 100%;
+    max-width: 100%;
+    color: $text-primary;
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #888;
+        border-radius: 5px;
+
+        &:hover {
+            background: #555;
+        }
+    }
+}
+
+// Classes globais
+.container {
+    @include container;
+}
+
+.flex-center {
+    @include flex-center;
+}

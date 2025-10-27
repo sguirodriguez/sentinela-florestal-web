@@ -1,0 +1,80 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.dashboard-page {
+    min-height: 100vh;
+    background-color: $bg-light;
+
+    .dashboard-main {
+        @include container;
+        padding-top: 1rem;
+        padding-bottom: 1.5rem;
+
+        @include mobile {
+            padding-top: 1.5rem;
+            padding-bottom: 1.5rem;
+        }
+
+        .dashboard-content {
+            border: 4px dashed $border-gray-200;
+            border-radius: 0.5rem;
+            padding: 1rem;
+            background-color: $bg-white;
+
+            @include mobile {
+                padding: 1.5rem;
+            }
+
+            @include tablet {
+                padding: 2rem;
+            }
+
+            h2 {
+                font-size: 1.25rem;
+                font-weight: bold;
+                color: $text-primary;
+                margin-bottom: 0.5rem;
+
+                @include mobile {
+                    font-size: 1.5rem;
+                    margin-bottom: 1rem;
+                }
+            }
+
+            p {
+                font-size: 0.875rem;
+                color: $text-secondary;
+
+                @include mobile {
+                    font-size: 1rem;
+                }
+            }
+
+            .user-info {
+                margin-top: 1rem;
+                padding: 0.75rem;
+                background-color: $bg-blue-50;
+                border-radius: 0.5rem;
+
+                @include mobile {
+                    padding: 1rem;
+                }
+
+                p {
+                    font-size: 0.75rem;
+                    color: $text-primary;
+                    margin: 0.25rem 0;
+
+                    @include mobile {
+                        font-size: 0.875rem;
+                        margin: 0.5rem 0;
+                    }
+
+                    strong {
+                        font-weight: 600;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,82 @@
+@use '../variables' as *;
+@use '../mixins' as *;
+
+.login-page {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 100vh;
+    background-color: $bg-light;
+    padding: 1rem;
+
+    @include mobile {
+        padding: 1.5rem;
+    }
+
+    @include desktop {
+        padding: 2rem;
+    }
+
+    .login-card {
+        width: 100%;
+        max-width: 28rem;
+        background-color: $bg-white;
+        border-radius: 0.5rem;
+        box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        padding: 1.5rem;
+        margin-top: 1rem;
+
+        @include mobile {
+            margin-top: 1.5rem;
+            padding: 2rem;
+        }
+
+        .login-header {
+            margin-bottom: 1.5rem;
+
+            @include mobile {
+                margin-bottom: 2rem;
+            }
+
+            h2 {
+                margin-top: 0.5rem;
+                text-align: center;
+                font-size: 1.5rem;
+                font-weight: 800;
+                color: $text-primary;
+
+                @include mobile {
+                    margin-top: 0.75rem;
+                    font-size: 1.875rem;
+                }
+            }
+
+            p {
+                margin-top: 0.5rem;
+                text-align: center;
+                font-size: 0.75rem;
+                color: $text-secondary;
+
+                @include mobile {
+                    font-size: 0.875rem;
+                }
+            }
+        }
+
+        .login-form {
+            margin-top: 1.5rem;
+
+            @include mobile {
+                margin-top: 2rem;
+            }
+
+            .form-inputs {
+                margin-bottom: 1rem;
+
+                @include mobile {
+                    margin-bottom: 1.5rem;
+                }
+            }
+        }
+    }
+}

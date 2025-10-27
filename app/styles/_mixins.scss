@@ -1,0 +1,54 @@
+@use './variables' as *;
+
+// Media queries
+@mixin mobile {
+    @media (min-width: $breakpoint-sm) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (min-width: $breakpoint-md) {
+        @content;
+    }
+}
+
+@mixin desktop {
+    @media (min-width: $breakpoint-lg) {
+        @content;
+    }
+}
+
+@mixin large-desktop {
+    @media (min-width: $breakpoint-xl) {
+        @content;
+    }
+}
+
+// Utilitários
+@mixin flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@mixin container {
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 0 1rem;
+
+    @include tablet {
+        padding: 0 1.5rem;
+    }
+
+    @include desktop {
+        padding: 0 2rem;
+    }
+}
+
+@mixin card {
+    background: $bg-white;
+    border-radius: 0.5rem;
+    box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+    padding: 1.5rem;
+}
