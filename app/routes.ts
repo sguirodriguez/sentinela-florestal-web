@@ -4,14 +4,16 @@ export default [
     // Rota raiz - redireciona para login ou dashboard
     index("routes/index.tsx"),
 
-    // Rotas pa publicas (login, signup, etc.)
+    // Rotas publicas (login, signup, etc.)
     layout("routes/_guest.tsx", [
         route("login", "routes/login.tsx"),
+        //cadastro
     ]),
 
     // Rotas protegidas (requerem autenticação)
     layout("routes/_auth.tsx", [
         route("dashboard", "routes/dashboard.tsx"),
+        route("settings", "routes/settings.tsx")
         // Adicione mais rotas protegidas aqui
         // route("profile", "routes/profile.tsx"),
         // route("settings", "routes/settings.tsx"),
