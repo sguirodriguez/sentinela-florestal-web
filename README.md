@@ -11,13 +11,106 @@ Este é um sistema de monitoramento florestal que permite:
 
 ## 🚀 Como rodar o projeto (Passo a Passo)
 
-### Pré-requisitos
+---
 
-Você precisa ter o **Node.js** instalado no seu computador. Se não tiver, baixe em: [https://nodejs.org/](https://nodejs.org/)
+## 🧩 1. Configurando sua máquina
 
-### Passo 1: Instalar as dependências
+### 📥 1.1. Instalar o NVM (Node Version Manager)
 
-Abra o terminal (Prompt de Comando ou PowerShell) na pasta do projeto e digite:
+O NVM permite que você tenha várias versões do Node.js instaladas e altere entre elas facilmente.
+
+#### 🖥️ Para Windows:
+
+1. Baixe o instalador:
+   
+   👉 **[https://github.com/coreybutler/nvm-windows/releases](https://github.com/coreybutler/nvm-windows/releases)**
+   
+   - Baixe o arquivo `nvm-setup.exe`
+   - Execute o instalador
+   - Siga as instruções de instalação
+
+2. Após instalar, **feche e reabra o terminal** (PowerShell ou CMD)
+
+3. Verifique se instalou corretamente:
+   
+   ```bash
+   nvm version
+   ```
+   
+   Deve mostrar algo como `1.1.12`
+
+---
+
+### ⚙️ 1.2. Instalar o Node.js 23.11.1
+
+Agora vamos instalar a versão correta do Node.js para este projeto:
+
+```bash
+nvm install 23.11.1
+```
+
+Verifique se instalou corretamente:
+
+```bash
+nvm ls
+```
+
+Deve aparecer algo como:
+
+```
+->     v23.11.1
+        system
+```
+
+---
+
+### 🎯 1.3. Definir o Node.js 23.11.1 como padrão
+
+```bash
+nvm use 23.11.1
+```
+
+Assim, toda vez que abrir o terminal, essa versão será usada automaticamente.
+
+---
+
+### ✅ 1.4. Verificar versões do Node e npm
+
+```bash
+node -v
+# deve mostrar v23.11.1
+
+npm -v
+# deve mostrar algo como 11.x.x
+```
+
+---
+
+## 📥 2. Baixando o projeto
+
+### 2.1. Pré-requisitos
+
+- **Git** instalado: [https://git-scm.com](https://git-scm.com/)
+- **GitHub** configurado (veja: [Como configurar o Git](https://git-scm.com/book/pt-br/v2/Começando-Configuração-Inicial-do-Git))
+
+---
+
+### 2.2. Clonar o repositório
+
+Abra o terminal e execute:
+
+```bash
+git clone https://github.com/sguirodriguez/sentinela-florestal-web.git
+cd sentinela-florestal-web
+```
+
+**O que faz?** Isso baixa o código do projeto do GitHub para o seu computador.
+
+---
+
+## ⚙️ 3. Instalando as dependências
+
+Na pasta do projeto, execute:
 
 ```bash
 npm install
@@ -25,15 +118,19 @@ npm install
 
 **O que faz?** Instala todas as bibliotecas necessárias para o projeto funcionar. Isso pode levar alguns minutos.
 
-### Passo 2: Iniciar o projeto
+Você verá muitas mensagens no terminal - isso é normal! Aguarde até aparecer algo como "added 250 packages" ou similar.
 
-Depois que a instalação terminar, digite:
+---
+
+## 🎮 4. Rodando o projeto
+
+Depois que a instalação terminar, execute:
 
 ```bash
 npm run dev
 ```
 
-### Passo 3: Acessar o projeto
+### 4.1. Acessar o projeto
 
 Abra seu navegador e acesse:
 
@@ -42,6 +139,10 @@ http://localhost:5173
 ```
 
 Pronto! O projeto está rodando! 🎉
+
+**O que verá:**
+- Uma mensagem no terminal mostrando que o servidor está rodando
+- O navegador abrirá automaticamente ou você pode abrir manualmente
 
 **Dica:** Para parar o projeto, pressione `Ctrl + C` no terminal.
 
