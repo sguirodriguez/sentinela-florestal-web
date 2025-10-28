@@ -6,7 +6,8 @@ interface User {
     email: string;
     name: string;
 }
-
+/* Adicionei o updateUser. Responsável por deixar alterar o usuário na tela settings
+copilot salvou nessa. Nao entendi direito a montagem da declaração.      */
 interface AuthContextType {
     user: User | null;
     isLoading: boolean;
@@ -55,6 +56,20 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         }
     };
 
+    const updateUser = async (data: Partial<User>): Promise<User> => {
+  if (!user) throw new Error("Usuário não autenticado");
+  setIsLoading(true);
+  try {
+    // Se tiver backend, troque por chamada fetch/axios para persistir no servidor
+    const updatedUser: User = { ...user, ...data };
+    setUser(updatedUser);
+    localStorage.setItem("user", JSON.stringify(updatedUser));
+    return updatedUser;
+  } finally {
+    setIsLoading(false);
+  }
+};
+
     const logout = () => {
         setUser(null);
         localStorage.removeItem("user");
@@ -66,9 +81,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: !!user,
         login,
         logout,
-        updateUser: function (data: Partial<User>): Promise<User> {
-            throw new Error("Function not implemented.");
-        }
+        updateUser,
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

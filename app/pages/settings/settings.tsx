@@ -4,11 +4,13 @@ import { useAuth } from '~/context/auth-context';
 import { useNavigate } from "react-router";
 
 export function Settings() {
-  const { user, logout } = useAuth();
+  const { user, updateUser} = useAuth();
   const navigate = useNavigate();
+  
+  
 
   const [email, setEmail] = useState(user?.email || "");
-  const [name, setName] = useState(user?.email || "");
+  const [name, setName] = useState(user?.name || "");
   const [successMsg, setSuccessMsg] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
@@ -18,24 +20,21 @@ const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setError("");
         setIsLoading(true);
-}
- /* 
-    tentativa de mudanças nos dados de usuário
+    try {
+        const updated = await updateUser({name, email});
+        setSuccessMsg("Configurações salvas com sucesso!");
+        console.log("Usuário atualizado:", updated);
 
-    falta mexer no auth-context 
-
-    auxilio chat gepeto
-
-
-        try {
-            await saveSettings(email, password);
-            navigate("/dashboard");
-        } catch (err) {
-            setError(err instanceof Error ? err.message : "Erro ao fazer login");
-        } finally {
-            setIsLoading(false);
-        }
- */
+        navigate("/dashboard")
+    } catch (err) {
+        setError(err instanceof Error ? err.message : "Erro ao atualizar usuário");
+        console.error("Erro ao atualizar usuário:", err);
+    } finally {
+        setIsLoading(false);
+    }
+    
+  }
+        
 return (
         <div className="settings-page">
             <div className="settings-card">
@@ -70,10 +69,11 @@ return (
 
                     <div>
                         <Button
+                            variant="primary"
                             type="submit"
                             disabled={isLoading}
                             isLoading={isLoading}
-                            className="button-full"
+                            className="button-sm"
                         >
                             Salvar alterações
                         </Button>
@@ -81,7 +81,8 @@ return (
                 </form>
             </div>
         </div>
-    );
-  }
+)
+
+}
 
 export default Settings;
