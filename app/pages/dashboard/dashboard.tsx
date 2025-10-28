@@ -1,25 +1,17 @@
 import { useAuth } from "../../context/auth-context";
 import { Button, Header } from "../../components";
 import { useNavigate } from "react-router";
-import Settings from "../settings/settings";
-
-export default function SettingsRoute() {
-    const navigate = useNavigate();
-
-    const goToSettings = () => {
-        navigate("/settings");
-    }
-};
 
 export function DashboardPage() {
-    
+    /* Aqui eu declarei a constante goToSettings, que chama um navigate
+    (permite redirecionar o usuário para diferentes rotas da aplicação)
+    e "/settings", ela navega o usuário para a rota de configurações. */
     const { user, logout, } = useAuth();
     const navigate = useNavigate();
     const goToSettings = () => {
         navigate("/settings")
 
     }
-    
 
     return (
         <div className="dashboard-page">
@@ -27,17 +19,14 @@ export function DashboardPage() {
                 logo={<h1>Sentinela Florestal</h1>}
                 userInfo={<span>{user?.email}</span>}
                 actions={
+                    /* Botão novo
+                    no *clique*, vai para a goToSettings */
                     <>
                     <Button variant="primary" size="sm" onClick={goToSettings}>
                             Editar
                     </Button><Button variant="danger" size="sm" onClick={logout}>
                             Sair
                         </Button></>
-
-                   
-        
-                    
-                    
                 }
             />
 

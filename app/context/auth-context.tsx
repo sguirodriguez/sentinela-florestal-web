@@ -13,6 +13,7 @@ interface AuthContextType {
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<void>;
     logout: () => void;
+    updateUser: (data: Partial<User>) => Promise<User>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -65,6 +66,9 @@ export function AuthProvider({ children }: { children: ReactNode }) {
         isAuthenticated: !!user,
         login,
         logout,
+        updateUser: function (data: Partial<User>): Promise<User> {
+            throw new Error("Function not implemented.");
+        }
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
