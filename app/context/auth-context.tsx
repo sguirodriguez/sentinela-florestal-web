@@ -60,7 +60,6 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   if (!user) throw new Error("Usuário não autenticado");
   setIsLoading(true);
   try {
-    // Se tiver backend, troque por chamada fetch/axios para persistir no servidor
     const updatedUser: User = { ...user, ...data };
     setUser(updatedUser);
     localStorage.setItem("user", JSON.stringify(updatedUser));

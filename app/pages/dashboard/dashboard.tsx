@@ -28,6 +28,7 @@ export function DashboardPage() {
                             Sair
                         </Button></>
                 }
+                        
             />
 
             <main className="dashboard-main">

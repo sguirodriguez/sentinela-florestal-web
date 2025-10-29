@@ -7,6 +7,7 @@ export default [
     // Rotas publicas (login, signup, etc.)
     layout("routes/_guest.tsx", [
         route("login", "routes/login.tsx"),
+        route("register", "routes/register.tsx"),
         //cadastro
     ]),
 
