@@ -8,6 +8,7 @@ export default [
     layout("routes/_guest.tsx", [
         route("login", "routes/login.tsx"),
         route("register", "routes/register.tsx"),
+        route("forgot-password", "routes/forgot-password.tsx"),
         //cadastro
     ]),
 
