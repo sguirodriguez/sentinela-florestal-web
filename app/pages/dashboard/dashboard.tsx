@@ -66,56 +66,120 @@ export function DashboardPage() {
             </div>
           )}
         </div>
+        <div>
+          <div
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              marginBottom: "0.5rem",
+              marginTop: "2rem",
+              width: "800px",
+              marginLeft: "13rem",
+            }}
+          >
+            <Button variant="danger" size="lg">
+              Reportar
+            </Button>
+            <Button
+              variant="primary"
+              size="lg"
+              style={{ marginBottom: "-3rem" }}
+            >
+              Filtros
+            </Button>
+          </div>
+          <h3
+            style={{
+              marginLeft: "13rem",
+              textAlign: "left",
+              margin: 0,
+              paddingBottom: "0.5rem",
+            }}
+          >
+            Incidentes
+          </h3>
+        </div>
         <div
           style={{
-            display: "flex",
-            justifyContent: "flex-end",
-            marginTop: "1rem",
+            marginTop: "20px",
+            width: "800px",
+            margin: "0 auto",
+            height: "500px",
+            border: "2px solid #ccc",
+            borderRadius: "20px",
+            padding: "1rem",
+            display: "grid",
+            gridTemplateColumns: "1fr",
+            gridTemplateRows: "1fr",
+            gap: "1rem",
+            backgroundColor: "#fefefe",
           }}
         >
-          <Button
-            variant="primary"
-            size="lg"
-            onClick={() => navigate("/nova-acao")}
+          {/* Bloco de INCIDENTES */}
+          <div
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              backgroundColor: "#f8d7da",
+              borderRadius: "10px",
+              border: "2px solid #ccc",
+              padding: "1rem",
+            }}
           >
-            Novo botão à direita
-          </Button>
-        </div>
+            <div
+              style={{
+                display: "flex",
+                gap: "1.5rem",
+                alignItems: "flex-start",
+              }}
+            >
+              {/* Bloco interno: Foto(s) */}
+              <div
+                style={{
+                  width: "350px",
+                  height: "350px",
+                  backgroundColor: "#e2e3e5",
+                  borderRadius: "10px",
+                  border: "2px solid #ccc",
+                  padding: "1rem",
+                  flexShrink: 0,
+                }}
+              >
+                <h3>Foto ou Fotos</h3>
+              </div>
 
-        <Button variant="danger" size="sm" onClick={handleProfile}>
-          <svg
-            width="300"
-            height="300"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M2 12C2 6.47715 6.47715 2 12 2V4H20V12H22C22 17.5228 17.5228 22 12 22C6.47715 22 2 17.5228 2 12ZM18 12H16V8H12V6C8.68629 6 6 8.68629 6 12C6 15.3137 8.68629 18 12 18C15.3137 18 18 15.3137 18 12Z"
-              fill="currentColor"
-            />
-          </svg>
-        </Button>
-        <p>Denúncia de incêndio</p>
-        <Button variant="danger" size="sm" onClick={handleProfile}>
-          <svg
-            width="300"
-            height="300"
-            viewBox="0 0 24 24"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              fill-rule="evenodd"
-              clip-rule="evenodd"
-              d="M4 21H6V11H12V13H20V5H13V3H4V21ZM12 5H6V9H13V11H18V7H12V5Z"
-              fill="currentColor"
-            />
-          </svg>
-        </Button>
-        <p>Denúncia de incidente</p>
+              {/* Texto ao lado do bloco de fotos */}
+              <div
+                style={{
+                  flexDirection: "column",
+                  marginTop: "4rem",
+                  justifyContent: "flex-start",
+                  lineHeight: "1.8",
+                }}
+              >
+                <p>
+                  <strong>Título:</strong> Nome do incidente
+                </p>
+                <p>
+                  <strong>Descrição:</strong> Breve explicação do ocorrido
+                </p>
+                <p>
+                  <strong>Data:</strong> 31/10/2025
+                </p>
+                <p>
+                  <strong>Status:</strong> Em andamento
+                </p>
+                <p>
+                  <strong>Classificação:</strong> Alta
+                </p>
+                <p>
+                  <strong>Categoria:</strong> Ambiental
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
       </main>
     </div>
   );
