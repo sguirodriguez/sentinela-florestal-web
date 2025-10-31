@@ -15,7 +15,8 @@ export default [
     // Rotas protegidas (requerem autenticação)
     layout("routes/_auth.tsx", [
         route("dashboard", "routes/dashboard.tsx"),
-        route("settings", "routes/settings.tsx")
+        route("settings", "routes/settings.tsx"),
+        route("profile", "routes/profile.tsx"),
         // Adicione mais rotas protegidas aqui
         // route("profile", "routes/profile.tsx"),
         // route("settings", "routes/settings.tsx"),

@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router";
 import { Button, Input } from "~/components";
 
-const ForgottenPassword = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
@@ -63,4 +63,4 @@ const ForgottenPassword = () => {
   );
 };
 
-export default ForgottenPassword;
+export default ForgotPassword;
