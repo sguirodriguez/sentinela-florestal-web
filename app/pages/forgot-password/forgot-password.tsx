@@ -1,13 +1,10 @@
 import { useState } from "react";
-import { Button, Header, Input } from "../../components";
 import { useNavigate } from "react-router";
+import { Button, Input } from "~/components";
 
-const Register = () => {
+const ForgotPassword = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [name, setName] = useState("");
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
@@ -23,30 +20,10 @@ const Register = () => {
       <div className="login-card">
         <div className="login-header">
           <h2>Sentinela Florestal</h2>
-          <p>Faça o cadastro para sua conta</p>
+          <p>Digite o e-mail para recuperar sua conta</p>
         </div>
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-inputs">
-            <Input
-              id="name"
-              type="text"
-              placeholder="Nome"
-              required
-              value={name}
-              onChange={(e) => setName(e.target.value)}
-              error={error}
-              style={{ marginTop: "10px" }}
-            />
-            <Input
-              id="birthday"
-              type="date"
-              placeholder="Data de nascimento"
-              required
-              value={birthday}
-              onChange={(e) => setBirthday(e.target.value)}
-              error={error}
-              style={{ marginTop: "10px" }}
-            />
             <Input
               id="email-address"
               type="email"
@@ -54,16 +31,6 @@ const Register = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ marginTop: "10px" }}
-            />
-            <Input
-              id="password"
-              type="password"
-              placeholder="Senha"
-              required
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              error={error}
               style={{ marginTop: "10px" }}
             />
           </div>
@@ -74,9 +41,10 @@ const Register = () => {
               disabled={isLoading}
               isLoading={isLoading}
               className="button-full"
+              style={{ backgroundColor: "green" }}
               onClick={handleNavigateLogin}
             >
-              Cadastrar
+              Recuperar
             </Button>
             <Button
               type="submit"
@@ -89,11 +57,10 @@ const Register = () => {
               Voltar para login
             </Button>
           </div>
-          <small>Obs: o usuário deve ter no mínimo 18 anos.</small>
         </form>
       </div>
     </div>
   );
 };
 
-export default Register;
+export default ForgotPassword;

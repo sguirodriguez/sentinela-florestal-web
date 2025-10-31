@@ -28,7 +28,11 @@ export function LoginPage() {
   const handleNavigateRegister = (e: React.FormEvent) => {
     e.preventDefault();
     navigate("/register");
-    console.log("Chamou o botao");
+  };
+
+  const handleNavigateForgotPassword = (e: React.FormEvent) => {
+    e.preventDefault();
+    navigate("/forgot-password");
   };
   return (
     <div className="login-page">
@@ -80,6 +84,15 @@ export function LoginPage() {
               onClick={handleNavigateRegister}
             >
               Ir para cadastro
+            </Button>
+            <Button
+              disabled={isLoading}
+              isLoading={isLoading}
+              className="button-full"
+              style={{ marginTop: "10px", backgroundColor: "#ff847bff" }}
+              onClick={handleNavigateForgotPassword}
+            >
+              Esqueci minha senha
             </Button>
           </div>
         </form>
