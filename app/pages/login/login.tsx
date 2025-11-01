@@ -2,6 +2,7 @@ import { useState } from "react";
 import { useAuth } from "../../context/auth-context";
 import { useNavigate } from "react-router";
 import { Button, Input } from "../../components";
+import { LoginIcon } from "../../assets/icons";
 
 export function LoginPage() {
   const { login, isLoading: authLoading } = useAuth();
@@ -28,8 +29,11 @@ export function LoginPage() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-header">
-          <h2>Sentinela Florestal</h2>
-          <p>Faça login na sua conta</p>
+          <div className="login-header-icon">
+            <LoginIcon />
+          </div>
+          <h1>Sentinela Florestal</h1>
+          <p>Faça login para acessar sua conta</p>
         </div>
         <form className="login-form" onSubmit={handleSubmit}>
           <div className="form-inputs">

@@ -1,6 +1,9 @@
 import { useState } from "react";
-import { Button, Header, Input } from "../../components";
+import { Button, Input } from "../../components";
 import { useNavigate } from "react-router";
+import { register as registerService } from "../../services/auth";
+import { validateEmail, validateMinAge, validatePassword, validateRequired, formatBirthdayToISO } from "../../utils/validators";
+import { RegisterIcon } from "../../assets/icons";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -11,7 +14,52 @@ const Register = () => {
   const [error, setError] = useState("");
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = () => {};
+  const validateForm = (): boolean => {
+    if (!validateRequired(name)) {
+      setError("Nome é obrigatório");
+      return false;
+    }
+
+    if (!validateRequired(email) || !validateEmail(email)) {
+      setError("Email inválido");
+      return false;
+    }
+
+    if (!validatePassword(password)) {
+      setError("Senha deve ter no mínimo 6 caracteres");
+      return false;
+    }
+
+    if (!validateRequired(birthday)) {
+      setError("Data de nascimento é obrigatória");
+      return false;
+    }
+
+    if (!validateMinAge(birthday)) {
+      setError("Usuário deve ter no mínimo 18 anos");
+      return false;
+    }
+
+    return true;
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError("");
+
+    if (!validateForm()) return;
+
+    setIsLoading(true);
+    await registerService({
+      name,
+      email,
+      password,
+      birthday: formatBirthdayToISO(birthday),
+    });
+    setIsLoading(false);
+
+    navigate("/login");
+  };
 
   const handleNavigateLogin = (e: React.FormEvent) => {
     e.preventDefault();
@@ -22,7 +70,10 @@ const Register = () => {
     <div className="login-page">
       <div className="login-card">
         <div className="login-header">
-          <h2>Sentinela Florestal</h2>
+          <div className="login-header-icon">
+            <RegisterIcon />
+          </div>
+          <h1>Sentinela Florestal</h1>
           <p>Faça o cadastro para sua conta</p>
         </div>
         <form className="login-form" onSubmit={handleSubmit}>
@@ -74,12 +125,11 @@ const Register = () => {
               disabled={isLoading}
               isLoading={isLoading}
               className="button-full"
-              onClick={handleNavigateLogin}
             >
               Cadastrar
             </Button>
             <Button
-              type="submit"
+              type="button"
               disabled={isLoading}
               isLoading={isLoading}
               className="button-full"
