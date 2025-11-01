@@ -1,10 +1,11 @@
 # Sentinela Florestal Web
 
-Sistema web para monitoramento florestal desenvolvido com React Router e TypeScript.
+Sistema para monitoramento florestal desenvolvido com React Router e TypeScript.
 
 ## 📋 O que é este projeto?
 
 Este é um sistema de monitoramento florestal que permite:
+
 - **Login e autenticação** de usuários
 - **Dashboard** para visualização de dados
 - Interface moderna e responsiva
@@ -22,9 +23,8 @@ O NVM permite que você tenha várias versões do Node.js instaladas e altere en
 #### 🖥️ Para Windows:
 
 1. Baixe o instalador:
-   
+
    👉 **[https://github.com/coreybutler/nvm-windows/releases](https://github.com/coreybutler/nvm-windows/releases)**
-   
    - Baixe o arquivo `nvm-setup.exe`
    - Execute o instalador
    - Siga as instruções de instalação
@@ -32,11 +32,11 @@ O NVM permite que você tenha várias versões do Node.js instaladas e altere en
 2. Após instalar, **feche e reabra o terminal** (PowerShell ou CMD)
 
 3. Verifique se instalou corretamente:
-   
+
    ```bash
    nvm version
    ```
-   
+
    Deve mostrar algo como `1.1.12`
 
 ---
@@ -141,6 +141,7 @@ http://localhost:5173
 Pronto! O projeto está rodando! 🎉
 
 **O que verá:**
+
 - Uma mensagem no terminal mostrando que o servidor está rodando
 - O navegador abrirá automaticamente ou você pode abrir manualmente
 
@@ -236,6 +237,7 @@ npm run lint
 ## 🔐 Sistema de Autenticação
 
 O projeto possui autenticação que controla:
+
 - Quem pode acessar o dashboard (apenas usuários logados)
 - Quem pode ver a página de login (apenas usuários não logados)
 
