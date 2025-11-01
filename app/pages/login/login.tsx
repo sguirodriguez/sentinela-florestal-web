@@ -85,7 +85,7 @@ export function LoginPage() {
             >
               Ir para cadastro
             </Button>
-            <Button
+            {/* <Button
               disabled={isLoading}
               isLoading={isLoading}
               className="button-full"
@@ -93,7 +93,7 @@ export function LoginPage() {
               onClick={handleNavigateForgotPassword}
             >
               Esqueci minha senha
-            </Button>
+            </Button> */}
           </div>
         </form>
       </div>

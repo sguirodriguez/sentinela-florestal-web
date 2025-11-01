@@ -17,7 +17,7 @@ export function DashboardPage() {
         userInfo={<span>{user?.email}</span>}
         actions={
           <>
-            <Button variant="primary" size="sm" onClick={handleProfile}>
+            {/* <Button variant="primary" size="sm" onClick={handleProfile}>
               Perfil
               <svg
                 width="24"
@@ -37,7 +37,7 @@ export function DashboardPage() {
                   fill="currentColor"
                 />
               </svg>
-            </Button>
+            </Button> */}
             <Button variant="danger" size="sm" onClick={logout}>
               Sair
             </Button>
