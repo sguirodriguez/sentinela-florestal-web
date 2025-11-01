@@ -4,36 +4,26 @@ import { useNavigate } from "react-router";
 import { Button, Input } from "../../components";
 
 export function LoginPage() {
-  const { login } = useAuth();
+  const { login, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    setIsLoading(true);
-
-    try {
-      await login(email, password);
-      navigate("/dashboard");
-    } catch (err) {
-      setError(err instanceof Error ? err.message : "Erro ao fazer login");
-    } finally {
-      setIsLoading(false);
-    }
+    await login(email, password);
   };
+
   const handleNavigateRegister = (e: React.FormEvent) => {
     e.preventDefault();
     navigate("/register");
   };
 
-  const handleNavigateForgotPassword = (e: React.FormEvent) => {
-    e.preventDefault();
-    navigate("/forgot-password");
-  };
+  // const handleNavigateForgotPassword = (e: React.FormEvent) => {
+  //   e.preventDefault();
+  //   navigate("/forgot-password");
+  // };
+
   return (
     <div className="login-page">
       <div className="login-card">
@@ -62,7 +52,6 @@ export function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              error={error}
               style={{ marginTop: "10px" }}
             />
           </div>
@@ -70,15 +59,15 @@ export function LoginPage() {
           <div>
             <Button
               type="submit"
-              disabled={isLoading}
-              isLoading={isLoading}
+              disabled={authLoading}
+              isLoading={authLoading}
               className="button-full"
             >
               Entrar
             </Button>
             <Button
-              disabled={isLoading}
-              isLoading={isLoading}
+              disabled={authLoading}
+              isLoading={authLoading}
               className="button-full"
               style={{ marginTop: "10px", backgroundColor: "grey" }}
               onClick={handleNavigateRegister}

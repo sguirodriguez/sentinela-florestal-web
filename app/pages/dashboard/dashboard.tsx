@@ -1,20 +1,19 @@
 import { useAuth } from "../../context/auth-context";
 import { Button, Header } from "../../components";
-import { useNavigate } from "react-router";
+// import { useNavigate } from "react-router";
 
 export function DashboardPage() {
-  const { user, logout } = useAuth();
-  const navigate = useNavigate();
+  const { logout } = useAuth();
+  // const navigate = useNavigate();
 
-  const handleProfile = () => {
-    navigate("/profile");
-  };
+  // const handleProfile = () => {
+  //   navigate("/profile");
+  // };
 
   return (
     <div className="dashboard-page">
       <Header
         logo={<h1>Sentinela Florestal</h1>}
-        userInfo={<span>{user?.email}</span>}
         actions={
           <>
             {/* <Button variant="primary" size="sm" onClick={handleProfile}>
@@ -52,19 +51,7 @@ export function DashboardPage() {
             Esta é uma rota protegida. Você só pode ver este conteúdo porque
             está autenticado.
           </p>
-          {user && (
-            <div className="user-info">
-              <p>
-                <strong>ID:</strong> {user.id}
-              </p>
-              <p>
-                <strong>Email:</strong> {user.email}
-              </p>
-              <p>
-                <strong>Nome:</strong> {user.name}
-              </p>
-            </div>
-          )}
+
         </div>
         <div>
           <div

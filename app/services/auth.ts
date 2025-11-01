@@ -1,4 +1,5 @@
 import { request, getErrorMessage } from "../utils/api";
+import { storage } from "../utils/storage";
 import toast from "react-hot-toast";
 
 export interface LoginRequest {
@@ -23,12 +24,12 @@ export const login = async (credentials: LoginRequest): Promise<LoginResponse | 
     if (error) {
         const message = getErrorMessage(error);
         toast.error(message);
+        return null;
     }
 
-    if (data?.token) {
-        localStorage.setItem("token", data.token);
-    }
+    if (!data?.token) return null;
 
+    storage.setItem("token", data.token);
     return data;
 };
 

@@ -1,9 +1,11 @@
 import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from "axios";
+import { storage } from "./storage";
 
-const API_BASE_URL = "http://localhost:3471/api";
+const API_BASE_URL = "http://localhost:8080/api";
 
 export const getErrorMessage = (error: any): string => {
-    return error?.data?.message
+    return error?.response?.data?.error
+        || error?.data?.message
         || error?.data?.error
         || (typeof error?.data === "string" ? error.data : null)
         || error?.message
@@ -11,7 +13,7 @@ export const getErrorMessage = (error: any): string => {
 };
 
 const addAuthToken = (config: InternalAxiosRequestConfig) => {
-    const token = localStorage.getItem("token");
+    const token = storage.getItem("token");
     if (!token) return config;
 
     config.headers.Authorization = `Bearer ${token}`;

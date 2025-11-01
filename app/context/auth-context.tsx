@@ -1,86 +1,55 @@
 import { createContext, useContext, useState, useEffect } from "react";
 import type { ReactNode } from "react";
+import { login as loginService } from "../services/auth";
+import { storage } from "../utils/storage";
+import { useNavigate } from "react-router";
 
-interface User {
-    id: string;
-    email: string;
-    name: string;
-}
-/* Adicionei o updateUser. Responsável por deixar alterar o usuário na tela settings
-copilot salvou nessa. Nao entendi direito a montagem da declaração.      */
 interface AuthContextType {
-    user: User | null;
     isLoading: boolean;
     isAuthenticated: boolean;
     login: (email: string, password: string) => Promise<void>;
     logout: () => void;
-    updateUser: (data: Partial<User>) => Promise<User>;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({ children }: { children: ReactNode }) {
-    const [user, setUser] = useState<User | null>(null);
     const [isLoading, setIsLoading] = useState(true);
+    const [isAuthenticated, setIsAuthenticated] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        const storedUser = localStorage.getItem("user");
-        if (storedUser) {
-            try {
-                setUser(JSON.parse(storedUser));
-            } catch (error) {
-                console.error("Erro ao recuperar usuário:", error);
-                localStorage.removeItem("user");
-            }
-        }
+        const token = storage.getItem("token");
+        setIsAuthenticated(!!token);
         setIsLoading(false);
     }, []);
 
     const login = async (email: string, password: string) => {
         setIsLoading(true);
-        try {
-            await new Promise((resolve) => setTimeout(resolve, 500));
+        const response = await loginService({ email, password });
 
-            const mockUser: User = {
-                id: "1",
-                email,
-                name: "Usuário",
-            };
-
-            setUser(mockUser);
-            localStorage.setItem("user", JSON.stringify(mockUser));
-        } catch (error) {
-            throw new Error("Credenciais inválidas");
-        } finally {
+        if (!response?.token) {
+            setIsAuthenticated(false);
             setIsLoading(false);
+            return;
         }
+
+        setIsAuthenticated(true);
+        setIsLoading(false);
+
+        navigate("/dashboard");
     };
 
-    const updateUser = async (data: Partial<User>): Promise<User> => {
-  if (!user) throw new Error("Usuário não autenticado");
-  setIsLoading(true);
-  try {
-    const updatedUser: User = { ...user, ...data };
-    setUser(updatedUser);
-    localStorage.setItem("user", JSON.stringify(updatedUser));
-    return updatedUser;
-  } finally {
-    setIsLoading(false);
-  }
-};
-
     const logout = () => {
-        setUser(null);
-        localStorage.removeItem("user");
+        storage.removeItem("token");
+        setIsAuthenticated(false);
     };
 
     const value: AuthContextType = {
-        user,
         isLoading,
-        isAuthenticated: !!user,
+        isAuthenticated,
         login,
-        logout,
-        updateUser,
+        logout
     };
 
     return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
