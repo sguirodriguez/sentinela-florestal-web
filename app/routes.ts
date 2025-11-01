@@ -17,6 +17,7 @@ export default [
         route("dashboard", "routes/dashboard.tsx"),
         route("settings", "routes/settings.tsx"),
         route("profile", "routes/profile.tsx"),
+         route("edit-adress", "routes/edit-adress.tsx")
         // Adicione mais rotas protegidas aqui
         // route("profile", "routes/profile.tsx"),
         // route("settings", "routes/settings.tsx"),
