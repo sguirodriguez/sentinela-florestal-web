@@ -1,14 +1,14 @@
-import { useState } from "react";
-import { useAuth } from "../../context/auth-context";
-import { useNavigate } from "react-router";
-import { Button, Input } from "../../components";
-import { LoginIcon } from "../../assets/icons";
+import { useState } from 'react';
+import { useAuth } from '../../context/auth-context';
+import { useNavigate } from 'react-router';
+import { Button, Input } from '../../components';
+import logoImage from '../../assets/logo/logo.png';
 
 export function LoginPage() {
   const { login, isLoading: authLoading } = useAuth();
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -17,7 +17,7 @@ export function LoginPage() {
 
   const handleNavigateRegister = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/register");
+    navigate('/register');
   };
 
   // const handleNavigateForgotPassword = (e: React.FormEvent) => {
@@ -29,10 +29,7 @@ export function LoginPage() {
     <div className="login-page">
       <div className="login-card">
         <div className="login-header">
-          <div className="login-header-icon">
-            <LoginIcon />
-          </div>
-          <h1>Sentinela Florestal</h1>
+          <img src={logoImage} alt="Sentinela Florestal Logo" />
           <p>Faça login para acessar sua conta</p>
         </div>
         <form className="login-form" onSubmit={handleSubmit}>
@@ -56,7 +53,7 @@ export function LoginPage() {
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: '10px' }}
             />
           </div>
 
@@ -73,7 +70,7 @@ export function LoginPage() {
               disabled={authLoading}
               isLoading={authLoading}
               className="button-full"
-              style={{ marginTop: "10px", backgroundColor: "grey" }}
+              style={{ marginTop: '10px', backgroundColor: 'grey' }}
               onClick={handleNavigateRegister}
             >
               Ir para cadastro

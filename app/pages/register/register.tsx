@@ -1,42 +1,48 @@
-import { useState } from "react";
-import { Button, Input } from "../../components";
-import { useNavigate } from "react-router";
-import { register as registerService } from "../../services/auth";
-import { validateEmail, validateMinAge, validatePassword, validateRequired, formatBirthdayToISO } from "../../utils/validators";
-import { RegisterIcon } from "../../assets/icons";
+import { useState } from 'react';
+import { Button, Input } from '../../components';
+import { useNavigate } from 'react-router';
+import { register as registerService } from '../../services/auth';
+import {
+  validateEmail,
+  validateMinAge,
+  validatePassword,
+  validateRequired,
+  formatBirthdayToISO,
+} from '../../utils/validators';
+import { RegisterIcon } from '../../assets/icons';
 
 const Register = () => {
   const navigate = useNavigate();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [birthday, setBirthday] = useState("");
-  const [name, setName] = useState("");
-  const [error, setError] = useState("");
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [birthday, setBirthday] = useState('');
+  const [name, setName] = useState('');
+  const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const validateForm = (): boolean => {
     if (!validateRequired(name)) {
-      setError("Nome é obrigatório");
+      setError('Nome é obrigatório');
       return false;
     }
 
     if (!validateRequired(email) || !validateEmail(email)) {
-      setError("Email inválido");
+      setError('Email inválido');
       return false;
     }
 
     if (!validatePassword(password)) {
-      setError("Senha deve ter no mínimo 6 caracteres");
+      setError('Senha deve ter no mínimo 6 caracteres');
       return false;
     }
 
     if (!validateRequired(birthday)) {
-      setError("Data de nascimento é obrigatória");
+      setError('Data de nascimento é obrigatória');
       return false;
     }
 
     if (!validateMinAge(birthday)) {
-      setError("Usuário deve ter no mínimo 18 anos");
+      setError('Usuário deve ter no mínimo 18 anos');
       return false;
     }
 
@@ -45,7 +51,7 @@ const Register = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
+    setError('');
 
     if (!validateForm()) return;
 
@@ -58,12 +64,12 @@ const Register = () => {
     });
     setIsLoading(false);
 
-    navigate("/login");
+    navigate('/login');
   };
 
   const handleNavigateLogin = (e: React.FormEvent) => {
     e.preventDefault();
-    navigate("/login");
+    navigate('/login');
   };
 
   return (
@@ -73,7 +79,6 @@ const Register = () => {
           <div className="login-header-icon">
             <RegisterIcon />
           </div>
-          <h1>Sentinela Florestal</h1>
           <p>Faça o cadastro para sua conta</p>
         </div>
         <form className="login-form" onSubmit={handleSubmit}>
@@ -86,7 +91,7 @@ const Register = () => {
               value={name}
               onChange={(e) => setName(e.target.value)}
               error={error}
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: '10px' }}
             />
             <Input
               id="birthday"
@@ -96,7 +101,7 @@ const Register = () => {
               value={birthday}
               onChange={(e) => setBirthday(e.target.value)}
               error={error}
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: '10px' }}
             />
             <Input
               id="email-address"
@@ -105,7 +110,7 @@ const Register = () => {
               required
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: '10px' }}
             />
             <Input
               id="password"
@@ -115,7 +120,7 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               error={error}
-              style={{ marginTop: "10px" }}
+              style={{ marginTop: '10px' }}
             />
           </div>
 
@@ -133,7 +138,7 @@ const Register = () => {
               disabled={isLoading}
               isLoading={isLoading}
               className="button-full"
-              style={{ marginTop: "10px", backgroundColor: "grey" }}
+              style={{ marginTop: '10px', backgroundColor: 'grey' }}
               onClick={handleNavigateLogin}
             >
               Voltar para login
