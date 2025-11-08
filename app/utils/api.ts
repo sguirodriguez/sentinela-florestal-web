@@ -1,4 +1,4 @@
-import axios, { type AxiosInstance, type InternalAxiosRequestConfig } from "axios";
+import axios, { type AxiosInstance, type InternalAxiosRequestConfig, type AxiosError } from "axios";
 import { storage } from "./storage";
 
 const API_BASE_URL = "http://localhost:8080/api";
@@ -14,10 +14,24 @@ export const getErrorMessage = (error: any): string => {
 
 const addAuthToken = (config: InternalAxiosRequestConfig) => {
     const token = storage.getItem("token");
-    if (!token) return config;
-
-    config.headers.Authorization = `Bearer ${token}`;
+    
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    
     return config;
+};
+
+const handleAuthError = (error: AxiosError) => {
+    if (error.response?.status === 401) {
+        storage.removeItem("token");
+        
+        if (typeof window !== "undefined") {
+            window.location.href = "/login";
+        }
+    }
+    
+    return Promise.reject(error);
 };
 
 const createApiInstance = (): AxiosInstance => {
@@ -28,7 +42,15 @@ const createApiInstance = (): AxiosInstance => {
         },
     });
 
-    api.interceptors.request.use(addAuthToken, Promise.reject);
+    api.interceptors.request.use(
+        (config) => addAuthToken(config),
+        (error) => Promise.reject(error)
+    );
+
+    api.interceptors.response.use(
+        (response) => response,
+        (error) => handleAuthError(error)
+    );
 
     return api;
 };

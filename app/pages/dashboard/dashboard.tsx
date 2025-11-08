@@ -1,170 +1,288 @@
-import { useAuth } from "../../context/auth-context";
-import { Button, Header } from "../../components";
-// import { useNavigate } from "react-router";
+import { useEffect, useState } from 'react';
+import { useAuth } from '../../context/auth-context';
+import { Button, Header } from '../../components';
+import { getEvents, type Event } from '../../services/events';
 
 export function DashboardPage() {
   const { logout } = useAuth();
-  // const navigate = useNavigate();
+  const [events, setEvents] = useState<Event[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-  // const handleProfile = () => {
-  //   navigate("/profile");
-  // };
+  useEffect(() => {
+    const fetchEvents = async () => {
+      setIsLoading(true);
+      const data = await getEvents();
+      setEvents(data);
+      setIsLoading(false);
+    };
+
+    fetchEvents();
+  }, []);
+
+  const formatDate = (dateString: string) => {
+    const date = new Date(dateString);
+    return date.toLocaleDateString('pt-BR', {
+      day: '2-digit',
+      month: '2-digit',
+      year: 'numeric',
+    });
+  };
+
+  const getStatusColor = (status: string) => {
+    const statusLower = status.toLowerCase();
+    if (
+      statusLower.includes('pendente') ||
+      statusLower.includes('aguardando')
+    ) {
+      return 'status-pending';
+    }
+    if (
+      statusLower.includes('em andamento') ||
+      statusLower.includes('processando')
+    ) {
+      return 'status-processing';
+    }
+    if (
+      statusLower.includes('resolvido') ||
+      statusLower.includes('concluído')
+    ) {
+      return 'status-resolved';
+    }
+    return 'status-default';
+  };
+
+  const getPriorityColor = (priority?: string) => {
+    if (!priority) return 'priority-default';
+    const priorityLower = priority.toLowerCase();
+    if (priorityLower.includes('alta') || priorityLower.includes('high')) {
+      return 'priority-high';
+    }
+    if (priorityLower.includes('média') || priorityLower.includes('medium')) {
+      return 'priority-medium';
+    }
+    if (priorityLower.includes('baixa') || priorityLower.includes('low')) {
+      return 'priority-low';
+    }
+    return 'priority-default';
+  };
+
+  const getImageSrc = (image: { base64: string; type: string }) => {
+    try {
+      let base64Data = image.base64.trim();
+
+      if (base64Data.startsWith('data:')) {
+        return base64Data.replace(/\s/g, '');
+      }
+
+      const cleanBase64 = base64Data.replace(/\s/g, '');
+
+      let mimeType = image.type || 'image/jpeg';
+      if (!mimeType.startsWith('image/')) {
+        if (mimeType.includes('jpeg') || mimeType.includes('jpg')) {
+          mimeType = 'image/jpeg';
+        } else if (mimeType.includes('png')) {
+          mimeType = 'image/png';
+        } else if (mimeType.includes('gif')) {
+          mimeType = 'image/gif';
+        } else if (mimeType.includes('webp')) {
+          mimeType = 'image/webp';
+        } else {
+          mimeType = 'image/jpeg';
+        }
+      }
+
+      return `data:${mimeType};base64,${cleanBase64}`;
+    } catch (error) {
+      console.error('Erro ao processar imagem base64:', error);
+      return '';
+    }
+  };
+
+  const handleImageError = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const target = e.currentTarget;
+    const container = target.closest('.event-image');
+    if (container) {
+      container.classList.add('image-error');
+    }
+    target.style.display = 'none';
+  };
 
   return (
     <div className="dashboard-page">
       <Header
         logo={<h1>Sentinela Florestal</h1>}
         actions={
-          <>
-            {/* <Button variant="primary" size="sm" onClick={handleProfile}>
-              Perfil
-              <svg
-                width="24"
-                height="24"
-                viewBox="0 0 24 24"
-                fill="none"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  fill-rule="evenodd"
-                  clip-rule="evenodd"
-                  d="M16 7C16 9.20914 14.2091 11 12 11C9.79086 11 8 9.20914 8 7C8 4.79086 9.79086 3 12 3C14.2091 3 16 4.79086 16 7ZM14 7C14 8.10457 13.1046 9 12 9C10.8954 9 10 8.10457 10 7C10 5.89543 10.8954 5 12 5C13.1046 5 14 5.89543 14 7Z"
-                  fill="currentColor"
-                />
-                <path
-                  d="M16 15C16 14.4477 15.5523 14 15 14H9C8.44772 14 8 14.4477 8 15V21H6V15C6 13.3431 7.34315 12 9 12H15C16.6569 12 18 13.3431 18 15V21H16V15Z"
-                  fill="currentColor"
-                />
-              </svg>
-            </Button> */}
-            <Button variant="danger" size="sm" onClick={logout}>
-              Sair
-            </Button>
-          </>
+          <Button variant="danger" size="sm" onClick={logout}>
+            Sair
+          </Button>
         }
       />
 
       <main className="dashboard-main">
-        <div className="dashboard-content">
-          <h2>Bem-vindo ao Dashboard!</h2>
-          <p>
-            Esta é uma rota protegida. Você só pode ver este conteúdo porque
-            está autenticado.
-          </p>
-
-        </div>
-        <div>
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: "0.5rem",
-              marginTop: "2rem",
-              width: "800px",
-              marginLeft: "13rem",
-            }}
-          >
-            <Button variant="danger" size="lg">
-              Reportar
-            </Button>
-            <Button
-              variant="primary"
-              size="lg"
-              style={{ marginBottom: "-3rem" }}
-            >
-              Filtros
-            </Button>
-          </div>
-          <h3
-            style={{
-              marginLeft: "13rem",
-              textAlign: "left",
-              margin: 0,
-              paddingBottom: "0.5rem",
-            }}
-          >
-            Incidentes
-          </h3>
-        </div>
-        <div
-          style={{
-            marginTop: "20px",
-            width: "800px",
-            margin: "0 auto",
-            height: "500px",
-            border: "2px solid #ccc",
-            borderRadius: "20px",
-            padding: "1rem",
-            display: "grid",
-            gridTemplateColumns: "1fr",
-            gridTemplateRows: "1fr",
-            gap: "1rem",
-            backgroundColor: "#fefefe",
-          }}
-        >
-          {/* Bloco de INCIDENTES */}
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              backgroundColor: "#f8d7da",
-              borderRadius: "10px",
-              border: "2px solid #ccc",
-              padding: "1rem",
-            }}
-          >
-            <div
-              style={{
-                display: "flex",
-                gap: "1.5rem",
-                alignItems: "flex-start",
-              }}
-            >
-              {/* Bloco interno: Foto(s) */}
-              <div
-                style={{
-                  width: "350px",
-                  height: "350px",
-                  backgroundColor: "#e2e3e5",
-                  borderRadius: "10px",
-                  border: "2px solid #ccc",
-                  padding: "1rem",
-                  flexShrink: 0,
-                }}
-              >
-                <h3>Foto ou Fotos</h3>
-              </div>
-
-              {/* Texto ao lado do bloco de fotos */}
-              <div
-                style={{
-                  flexDirection: "column",
-                  marginTop: "4rem",
-                  justifyContent: "flex-start",
-                  lineHeight: "1.8",
-                }}
-              >
-                <p>
-                  <strong>Título:</strong> Nome do incidente
-                </p>
-                <p>
-                  <strong>Descrição:</strong> Breve explicação do ocorrido
-                </p>
-                <p>
-                  <strong>Data:</strong> 31/10/2025
-                </p>
-                <p>
-                  <strong>Status:</strong> Em andamento
-                </p>
-                <p>
-                  <strong>Classificação:</strong> Alta
-                </p>
-                <p>
-                  <strong>Categoria:</strong> Ambiental
-                </p>
-              </div>
+        <div className="dashboard-container">
+          <div className="dashboard-header">
+            <div className="dashboard-title-section">
+              <h2>Dashboard</h2>
+              <p>Visualize e gerencie os eventos florestais reportados</p>
             </div>
+            <div className="dashboard-actions">
+              <Button variant="danger" size="lg">
+                Reportar Evento
+              </Button>
+              <Button variant="primary" size="lg">
+                Filtros
+              </Button>
+            </div>
+          </div>
+
+          <div className="events-section">
+            <h3 className="events-title">Eventos Reportados</h3>
+
+            {isLoading ? (
+              <div className="events-loading">
+                <div className="spinner"></div>
+                <p>Carregando eventos...</p>
+              </div>
+            ) : events.length === 0 ? (
+              <div className="events-empty">
+                <svg
+                  width="64"
+                  height="64"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-2 15l-5-5 1.41-1.41L10 14.17l7.59-7.59L19 8l-9 9z"
+                    fill="currentColor"
+                    opacity="0.3"
+                  />
+                </svg>
+                <p>Nenhum evento encontrado</p>
+                <Button variant="primary" size="md">
+                  Reportar Primeiro Evento
+                </Button>
+              </div>
+            ) : (
+              <div className="events-grid">
+                {events.map((event) => (
+                  <div key={event.id} className="event-card">
+                    <div className="event-card-header">
+                      <h4 className="event-title">{event.title}</h4>
+                      <div className="event-badges">
+                        <span
+                          className={`event-status ${getStatusColor(event.status)}`}
+                        >
+                          {event.status}
+                        </span>
+                        {event.priority && (
+                          <span
+                            className={`event-priority ${getPriorityColor(event.priority)}`}
+                          >
+                            {event.priority}
+                          </span>
+                        )}
+                      </div>
+                    </div>
+
+                    {event.images && event.images.length > 0 && (
+                      <div className="event-images">
+                        {event.images.slice(0, 3).map((image) => {
+                          const imageSrc = getImageSrc(image);
+                          if (!imageSrc) return null;
+
+                          return (
+                            <div key={image.id} className="event-image">
+                              <img
+                                src={imageSrc}
+                                alt={`Imagem do evento ${event.title}`}
+                                loading="lazy"
+                                onError={handleImageError}
+                              />
+                            </div>
+                          );
+                        })}
+                        {event.images.length > 3 && (
+                          <div className="event-image-more">
+                            +{event.images.length - 3}
+                          </div>
+                        )}
+                      </div>
+                    )}
+
+                    <div className="event-content">
+                      {event.description && (
+                        <p className="event-description">{event.description}</p>
+                      )}
+
+                      <div className="event-details">
+                        <div className="event-detail-item">
+                          <svg
+                            width="16"
+                            height="16"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8zm.31-8.86c-1.77-.45-2.34-.94-2.34-1.67 0-.84.79-1.43 2.1-1.43 1.38 0 1.9.66 1.94 1.64h1.71c-.05-1.34-.87-2.57-2.49-2.97V5H10.9v1.69c-1.51.32-2.72 1.3-2.72 2.81 0 1.79 1.49 2.69 3.66 3.21 1.95.46 2.34 1.15 2.34 1.87 0 .53-.39 1.39-2.1 1.39-1.6 0-2.23-.72-2.32-1.64H8.04c.1 1.7 1.36 2.66 2.86 2.97V19h2.34v-1.67c1.52-.29 2.72-1.16 2.72-2.77 0-2.35-1.97-2.84-3.66-3.25z"
+                              fill="currentColor"
+                            />
+                          </svg>
+                          <span>{formatDate(event.createdAt)}</span>
+                        </div>
+
+                        {event.category && (
+                          <div className="event-detail-item">
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"
+                                fill="currentColor"
+                              />
+                            </svg>
+                            <span>
+                              {event.category.name || 'Sem categoria'}
+                            </span>
+                          </div>
+                        )}
+
+                        {event.city && event.state && (
+                          <div className="event-detail-item">
+                            <svg
+                              width="16"
+                              height="16"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              xmlns="http://www.w3.org/2000/svg"
+                            >
+                              <path
+                                d="M12 2C8.13 2 5 5.13 5 9c0 5.25 7 13 7 13s7-7.75 7-13c0-3.87-3.13-7-7-7zm0 9.5c-1.38 0-2.5-1.12-2.5-2.5s1.12-2.5 2.5-2.5 2.5 1.12 2.5 2.5-1.12 2.5-2.5 2.5z"
+                                fill="currentColor"
+                              />
+                            </svg>
+                            <span>
+                              {event.city}, {event.state}
+                            </span>
+                          </div>
+                        )}
+                      </div>
+
+                      {event.user && (
+                        <div className="event-user">
+                          <span>Reportado por: {event.user.name}</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
       </main>
